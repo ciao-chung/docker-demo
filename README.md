@@ -25,9 +25,3 @@ sudo docker login
 
 sudo docker push ciaochung/docker-demo:1.0.0
 ```
-
-## Run Remote Image
-
-```bash
-sudo docker run -p 4000:80 ciaochung/docker-demo:1.0.0
-```
