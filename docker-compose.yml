@@ -12,6 +12,8 @@ services:
         condition: on-failure
     ports:
       - "4000:80"
+    volumes:
+      - .:/app
     networks:
       - webnet
 networks:
