@@ -1,7 +1,5 @@
 FROM ubuntu:16.04
 
-MAINTAINER "Ciao Chung<ciao0958@gmail.com>"
-
 USER root
 
 RUN apt-get update && \
@@ -13,3 +11,6 @@ RUN apt-get update && \
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
     apt-get update && \
     apt-get install -y yarn && yarn --version
+
+# keep ubuntu running(ubuntu will shut down immediately after the run entrypoint command when run in detached mode)
+CMD tail -f /dev/null && php -v
