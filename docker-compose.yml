@@ -8,15 +8,3 @@ services:
         limits:
           cpus: "0.5"
           memory: 500M
-    depends_on:
-      - php
-    links:
-      - php
-  php:
-    build:
-      context: ./php
-    deploy:
-      resources:
-        limits:
-          cpus: "0.5"
-          memory: 500M
