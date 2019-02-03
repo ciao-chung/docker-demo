@@ -20,13 +20,13 @@ RUN apt-get install -y apache2
 RUN service apache2 restart
 
 RUN yarn global add ciao-ssr
-RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb; exit 0
+RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 RUN dpkg -i google-chrome*.deb; exit 0
-RUN apt-get install -f -y; exit 0
-RUN rm -f google-chrome*.deb; exit 0
-RUN google-chrome --version; exit 0
+RUN apt-get install -f -y
+RUN rm -f google-chrome*.deb
+RUN google-chrome --version
 RUN echo '{ "allowOrigin": [ "*" ], "host": "0.0.0.0", "launchOptions": { "args" : ["--no-sandbox", "--disable-setuid-sandbox"] }, "cache": { "ttl": 300, "maxsize": 1000 }, "port": 3000 }' > /root/ssr.json
 
 EXPOSE 3000 80 443 22
 
-CMD ["tail -f /dev/null", "ifconfig", "service apache2 restart"]
+CMD tail -f /dev/null; ifconfig; service apache2 restart
