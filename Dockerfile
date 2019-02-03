@@ -19,17 +19,14 @@ RUN yarn global add pm2
 RUN apt-get install -y apache2
 RUN service apache2 restart
 
-RUN yarn global add ciao-ssr \
-  && apt-get install libxss1 libappindicator1 libindicator7 -y \
-  && wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -P /root \
-  && apt-get update \
-RUN dpkg -if /root/google-chrome*.deb
-RUN apt-get install -f -y
-RUN rm -f /root/google-chrome*.deb \
-  && ll /usr/bin/google-chrome \
-  && google-chrome --version \
-RUN echo '{ "allowOrigin": [ "*" ], "launchOptions": { "args" : ["--no-sandbox", "--disable-setuid-sandbox"] }, "cache": { "ttl": 300, "maxsize": 1000 }, "port": 3000 }' > /root/ssr.json
+RUN yarn global add ciao-ssr
+RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb; exit 0
+RUN dpkg -i google-chrome*.deb; exit 0
+RUN apt-get install -f -y; exit 0
+RUN rm -f google-chrome*.deb; exit 0
+RUN google-chrome --version; exit 0
+RUN echo '{ "allowOrigin": [ "*" ], "host": "0.0.0.0", "launchOptions": { "args" : ["--no-sandbox", "--disable-setuid-sandbox"] }, "cache": { "ttl": 300, "maxsize": 1000 }, "port": 3000 }' > /root/ssr.json
 
 EXPOSE 3000 80 443 22
 
-CMD tail -f /dev/null && node -v && npm -v && yarn -v && ifconfig
+CMD ["tail -f /dev/null", "ifconfig", "service apache2 restart"]
