@@ -25,7 +25,6 @@ RUN apt-get update
 RUN echo "mysql-server mysql-server/root_password password ${MYSQL_ROOT_PASSWORD}" | debconf-set-selections
 RUN echo "mysql-server mysql-server/root_password_again password ${MYSQL_ROOT_PASSWORD}" | debconf-set-selections
 RUN apt-get install mysql-server-5.7 -y && mysql --version
-RUN chmod -R 755 /var/lib/mysql
 
 # phpmyadmin
 RUN echo "phpmyadmin phpmyadmin/dbconfig-install boolean true" | debconf-set-selections
