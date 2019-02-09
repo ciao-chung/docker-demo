@@ -1,0 +1,47 @@
+version: "3"
+services:
+#  db:
+#    container_name: mysql
+#    env_file:
+#      - .env
+#    build:
+#      context: ./mysql
+#  admin:
+#    container_name: backend
+#    image: adminer
+#    ports:
+#      - 8080:8080
+#    depends_on:
+#      - db
+#    links:
+#      - db
+#  db:
+#    container_name: mysql
+#    image: mysql:5.7
+#    environment:
+#      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+#      MYSQL_ROOT_HOST: '%'
+  backend:
+    container_name: backend
+    env_file:
+      - .env
+    build:
+      context: ./backend
+    ports:
+      - 81:80
+#    depends_on:
+#      - db
+#    links:
+#      - db
+#  ssr:
+#    build:
+#      context: ./ssr
+#    deploy:
+#      resources:
+#        limits:
+#          cpus: "0.5"
+#          memory: 500M
+#    depends_on:
+#      - db
+#    links:
+#      - db
