@@ -27,6 +27,9 @@ services:
       - .env
     build:
       context: ./backend
+      args:
+        - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+        - MYSQL_PWD=$MYSQL_PWD
     ports:
       - 81:80
 #    depends_on:

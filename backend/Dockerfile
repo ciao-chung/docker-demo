@@ -1,6 +1,11 @@
 FROM ubuntu:16.04
 MAINTAINER Ciao Chung
 
+ARG MYSQL_ROOT_PASSWORD
+ENV MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+ARG MYSQL_PWD
+ENV MYSQL_PWD=${MYSQL_PWD}
+
 ENV DEBIAN_FRONTEND noninteractive
 
 ## php
@@ -20,12 +25,7 @@ RUN apt-get update
 RUN echo "mysql-server mysql-server/root_password password ${MYSQL_ROOT_PASSWORD}" | debconf-set-selections
 RUN echo "mysql-server mysql-server/root_password_again password ${MYSQL_ROOT_PASSWORD}" | debconf-set-selections
 RUN apt-get install mysql-server-5.7 -y && mysql --version
-RUN chmod -R 755 /var/lib/mysql/ && \
- echo "skip-grant-tables" >> /etc/mysql/mysql.conf.d/mysqld.cnf
-RUN service mysql restart && \
-  mysql -uroot -e "update mysql.user set host='%' where host='localhost';"
-  mysql -uroot -e "update mysql.user set authentication_string=password('${MYSQL_ROOT_PASSWORD}') where user='root'; flush privileges;"
-  sed -i -e 's/skip-grant-tables/ /g' /etc/mysql/mysql.conf.d/mysqld.cnf
+RUN chmod -R 755 /var/lib/mysql
 
 # phpmyadmin
 RUN echo "phpmyadmin phpmyadmin/dbconfig-install boolean true" | debconf-set-selections
