@@ -18,4 +18,4 @@ RUN echo '{ "allowOrigin": [ "*" ], "host": "0.0.0.0", "launchOptions": { "args"
 
 EXPOSE 3000
 
-CMD ["sh", "-c", "tail -f /dev/null"]
+CMD ["sh", "-c", "pm2 start ciao-ssr --name='ssr' -- --config=/config/ssr.json && tail -f /dev/null"]
