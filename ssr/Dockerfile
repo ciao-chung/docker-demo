@@ -14,7 +14,6 @@ RUN apt-get install -f -y
 RUN rm -f google-chrome*.deb
 RUN google-chrome --version
 RUN yarn global add ciao-ssr pm2
-RUN echo '{ "allowOrigin": [ "*" ], "host": "0.0.0.0", "launchOptions": { "args" : ["--no-sandbox", "--disable-setuid-sandbox"] }, "cache": { "ttl": 300, "maxsize": 1000 }, "port": 3000 }' > /root/ssr.json
 
 EXPOSE 3000
 
