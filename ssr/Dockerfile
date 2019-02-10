@@ -1,32 +1,19 @@
-FROM ubuntu:16.04
+FROM node:8
 MAINTAINER Ciao Chung
 
-ENV DEBIAN_FRONTEND noninteractive
-
-RUN apt-get update
-RUN apt-get install -y --assume-yes apt-utils
-RUN apt-get install -y software-properties-common gnupg
-RUN apt-get install -y curl wget vim net-tools
-RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
-RUN apt-get install -y nodejs \
-  && nodejs -v \
-  && npm -v
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-RUN apt-get update
-RUN apt-get install -y yarn && yarn --version
-RUN yarn global add pm2
-RUN apt-get install -y apache2
-RUN service apache2 restart
-
-RUN yarn global add ciao-ssr
+RUN apt-get update -y
+RUN apt-get install -y fonts-liberation libappindicator3-1 libasound2 libatk-bridge2.0-0 && \
+  libatspi2.0-0 libgtk-3-0 libnspr4 libnss3 libx11-xcb1 && \
+  libxss1 libxtst6 lsb-release xdg-utils; exit 0
+RUN apt --fix-broken install -y
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 RUN dpkg -i google-chrome*.deb; exit 0
 RUN apt-get install -f -y
 RUN rm -f google-chrome*.deb
 RUN google-chrome --version
+RUN yarn global add ciao-ssr pm2
 RUN echo '{ "allowOrigin": [ "*" ], "host": "0.0.0.0", "launchOptions": { "args" : ["--no-sandbox", "--disable-setuid-sandbox"] }, "cache": { "ttl": 300, "maxsize": 1000 }, "port": 3000 }' > /root/ssr.json
 
-EXPOSE 3000 80 443 22
+EXPOSE 3000
 
-CMD tail -f /dev/null; ifconfig; service apache2 restart
+CMD ["sh", "-c", "tail -f /dev/null"]
