@@ -1,3 +1,5 @@
+# docker build --tag ssr . --no-cache
+# docker run --name ssr -v /path-to-your-host/ssr.json:/config/ssr.json -p 3000:3000 -d ssr
 FROM node:8
 MAINTAINER Ciao Chung
 
